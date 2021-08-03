@@ -8,6 +8,14 @@ const protocol = 'https://';
 const baseWebUrl = 'https://www.rumbletalk.com';
 const serviceRelativeUrl = 'client/service.php?hash=';
 const cdn = 'https://d1pfint8izqszg.cloudfront.net';
+const postMessageEvents = {
+  LOGOUT_CB: 'pm.1',
+  LOGOUT_CB_RECEIVED: 'pm.2',
+  LOGIN: 'pm.3',
+  LOGIN_SUCCESS: 'pm.4',
+  LOGIN_ALREADY_LOGGED_IN: 'pm.5',
+  LOGOUT: 'pm.6',
+};
 
 class RumbleTalk extends React.Component {
   constructor(props) {
@@ -172,7 +180,7 @@ class RumbleTalk extends React.Component {
         }
       }, 100);
     }
-  }
+  };
 
   handleImageLoad = (event) => {
     const { floatingChat, chatBubble } = this.state;
@@ -186,7 +194,7 @@ class RumbleTalk extends React.Component {
     this.setState({ floatingChat, chatBubble });
   };
 
-  login = (data, cb) => {
+  login = (data) => {
     const message = {};
 
     /* handle username value */
@@ -211,7 +219,7 @@ class RumbleTalk extends React.Component {
       message.image = data.image;
     }
 
-    message.type = this.postMessageEvents.LOGIN;
+    message.type = postMessageEvents.LOGIN;
     message.hash = data.hash;
     message.forceLogin = data.forceLogin;
 
@@ -229,7 +237,9 @@ class RumbleTalk extends React.Component {
         }
 
         if (typeof event.data !== 'object') {
-          console.log(`Error: invalid data received in RumbleTalk SDK: ${event.data}`);
+          console.log(
+            `Error: invalid data received in RumbleTalk SDK: ${event.data}`
+          );
         }
 
         /* different chat callback */
@@ -239,25 +249,113 @@ class RumbleTalk extends React.Component {
 
         /* validate that the message is of a successful login of the specific chat */
         if (
-          event.data.type === this.postMessageEvents.LOGIN_SUCCESS ||
-          event.data.type === this.postMessageEvents.LOGIN_ALREADY_LOGGED_IN
+          event.data.type === postMessageEvents.LOGIN_SUCCESS ||
+          event.data.type === postMessageEvents.LOGIN_ALREADY_LOGGED_IN
         ) {
           clearInterval(intervalHandle);
           window.removeEventListener('message', handlePostMessage);
 
-          cb(
-            {
-              status: event.data.type,
-              message: event.data.type === this.postMessageEvents.LOGIN_SUCCESS
-                  ? 'success'
-                  : 'already logged in'
-            }
-          );
+          data.callback({
+            status: event.data.type,
+            message:
+              event.data.type === postMessageEvents.LOGIN_SUCCESS
+                ? 'success'
+                : 'already logged in',
+          });
         }
       }.bind(this),
       false
     );
-  }
+  };
+
+  logout = (data) => {
+    const message = {
+      type: postMessageEvents.LOGOUT,
+      hash: data.hash,
+    };
+
+    if (data.userId) {
+      message.userId = data.userId;
+    }
+
+    if (data.username) {
+      message.username = data.username;
+    }
+
+    this.postMessage(message);
+  };
+
+  logoutCB = (data) => {
+    const intervalHandle = setInterval(() => {
+      this.postMessage({ type: postMessageEvents.LOGOUT_CB });
+    }, 1000);
+
+    window.addEventListener(
+      'message',
+      (event) => {
+        /* validates the origin to be from a chat */
+        if (!this.validateChatOrigin(event.origin)) {
+          return;
+        }
+
+        /* expecting an object */
+        if (typeof event.data !== 'object') {
+          return;
+        }
+
+        /* different chat callback */
+        if (event.data.hash !== data.hash) {
+          return;
+        }
+
+        /* callback registered */
+        if (event.data.type === postMessageEvents.LOGOUT_CB_RECEIVED) {
+          clearInterval(intervalHandle);
+          return;
+        }
+
+        /* validate event type */
+        if (event.data.type !== postMessageEvents.LOGOUT_CB) {
+          return;
+        }
+
+        data.callback(event.data.reason);
+      },
+      false
+    );
+  };
+
+  postMessage = (data) => {
+    try {
+      const target =
+        this.iframeRef.current instanceof HTMLIFrameElement
+          ? this.iframeRef.current.contentWindow
+          : this.iframeRef.current;
+      target.postMessage(data, `${protocol}${this.server}`);
+    } catch (error) {
+      console.log(error.name, error.message);
+    }
+  };
+
+  trim = (str) => str.replace(/^\s+|\s+$/g, '');
+
+  validateUsername = (username) =>
+    !/^-?\d+$/.test(username) && username.length < 64;
+
+  validatePassword = (password) => 0 < password.length && password.length < 51;
+
+  validateUrl = (url) =>
+    /(https?:)?\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(
+      url
+    );
+
+  /**
+   * checks if the given origin is of a chat service
+   * @param origin - the URL of the origin
+   * returns boolean
+   */
+  validateChatOrigin = (origin) =>
+    /^https:\/\/.+\.rumbletalk\.(net|com)(:4433)?$/.test(origin);
 
   componentDidMount() {
     const { floating, counter, rumbleTalkRef } = this.props;
