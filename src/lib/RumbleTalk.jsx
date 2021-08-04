@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import './RumbleTalk.css';
+import Iframe from './components/Iframe';
+import FloatingBubble from './components/FloatingChat';
 
 const protocol = 'https://';
 const baseWebUrl = 'https://www.rumbletalk.com';
 const serviceRelativeUrl = 'client/service.php?hash=';
-const cdn = 'https://d1pfint8izqszg.cloudfront.net';
 const postMessageEvents = {
   LOGOUT_CB: 'pm.1',
   LOGOUT_CB_RECEIVED: 'pm.2',
@@ -358,7 +359,7 @@ class RumbleTalk extends React.Component {
     /^https:\/\/.+\.rumbletalk\.(net|com)(:4433)?$/.test(origin);
 
   componentDidMount() {
-    const { floating, counter, rumbleTalkRef } = this.props;
+    const { floating, counter, ref } = this.props;
     const { counters } = this.state;
 
     if (floating && counter) {
@@ -379,88 +380,37 @@ class RumbleTalk extends React.Component {
     }
 
     this.addListeners();
-    rumbleTalkRef.current.login = this.login;
-    rumbleTalkRef.current.logout = this.logout;
-    rumbleTalkRef.current.logoutCB = this.logoutCB;
+    ref.current.login = this.login;
+    ref.current.logout = this.logout;
+    ref.current.logoutCB = this.logoutCB;
     this.setState({ counters }, this.loadIframe);
   }
 
   render() {
-    const { width, height, floating, side, image, counter } = this.props;
-    const { src, userCount, counters, floatingChat, chatBubble } = this.state;
+    const { width, height, floating } = this.props;
+    const { src } = this.state;
+
+    if (!src) {
+      return null;
+    }
 
     return floating ? (
-      <div
-        className={`rumbletalk-floating rumbletalk-floating-${side}`}
-        onClick={this.mobile ? this.openChat : this.toggleFloatingChat}
-        style={{
-          width: `${chatBubble.width}px`,
-          height: `${chatBubble.height}px`,
-        }}
-      >
-        <img
-          alt='Click to join the conversation'
-          title='Click to join the conversation'
-          src={image}
-          className={side}
-          onLoad={this.handleImageLoad}
-        />
-
-        {counter && (
-          <div
-            className='counter-div'
-            style={{ top: `${counters.top}px`, left: `${counters.left}px` }}
-          >
-            {!this.mobile && !userCount && (
-              <img alt='loading' src={`${cdn}/images/toolbar/mini_wait.gif`} />
-            )}
-            {!this.mobile && userCount}
-          </div>
-        )}
-
-        {!this.mobile && (
-          <div
-            className={`chat-div chat-div-${floatingChat.className} chat-div-${side}`}
-            style={floatingChat.style}
-          >
-            <img
-              className='close-button'
-              alt='close'
-              src={`${cdn}/images/c.png`}
-              style={{
-                left: side === 'left' ? 'auto' : '-8px',
-                right: side === 'right' ? 'auto' : '-8px',
-              }}
-              onClick={(e) => this.toggleFloatingChat(e)}
-            />
-
-            <iframe
-              title='iframe'
-              frameBorder='0'
-              allow='microphone; camera'
-              allowtransparency='true'
-              ref={this.iframeRef}
-              src={src}
-              style={{ width: `${width}px`, height: `${height}px` }}
-              onLoad={this.iframeHasLoaded}
-            />
-          </div>
-        )}
-      </div>
+      <FloatingBubble
+        {...this.props}
+        {...this.state}
+        ref={this.iframeRef}
+        isMobile={this.mobile}
+        openChat={this.openChat}
+        toggleFloatingChat={this.toggleFloatingChat}
+        onIframeLoad={this.iframeHasLoaded}
+        onImageLoad={this.handleImageLoad}
+      />
     ) : (
       <div
         className='rumbletalk-embed'
         style={{ width: `${width}px`, height: `${height}px` }}
       >
-        <iframe
-          title='iframe'
-          frameBorder='0'
-          allow='microphone; camera; fullscreen; autoplay'
-          allowtransparency='true'
-          ref={this.iframeRef}
-          src={src}
-          onLoad={this.iframeHasLoaded}
-        ></iframe>
+        <Iframe src={src} onLoad={this.iframeHasLoaded} ref={this.iframeRef} />
       </div>
     );
   }
@@ -474,7 +424,7 @@ RumbleTalk.propTypes = {
   side: PropTypes.oneOf(['left', 'right']),
   image: PropTypes.string,
   counter: PropTypes.string,
-  rumbleTalkRef: PropTypes.shape({
+  ref: PropTypes.shape({
     current: PropTypes.shape({
       login: PropTypes.func,
       logout: PropTypes.func,
@@ -489,7 +439,7 @@ RumbleTalk.defaultProps = {
   floating: false,
   side: 'right',
   image: 'https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png',
-  rumbleTalkRef: { current: {} },
+  ref: { current: {} },
 };
 
 export default RumbleTalk;

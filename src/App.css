@@ -1,0 +1,18 @@
+.main {
+    height: 100%;
+    width: 100%;
+}
+
+.main > .form {
+    padding: 10px;
+}
+
+.main > .form input {
+    height: 1.5em;
+    width: 150px;
+    margin: 0 5px;
+}
+
+.main > .form > .buttons button {
+    margin: 10px 5px;
+}

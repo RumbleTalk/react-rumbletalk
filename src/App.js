@@ -1,55 +1,92 @@
 import React from 'react';
+
+import './App.css';
 import RumbleTalk from './lib/RumbleTalk';
 
+
 const hash = 'ykUIwC4J';
-const username = 'admin';
 
-const loginData = {
-  hash,
-  username,
-  password: 'p@ssw0rd123',
-  callback: res => {
-    console.log('login response', res);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+    };
   }
-};
 
-const logoutData = {
-  hash,
-  username,
-};
+  componentDidMount() {
+    this.rumbleTalkRef = React.createRef();
+  }
+  
 
-const logoutCBdata = {
-  hash,
-  username,
-  callback: (reason) => {
-    console.log('handleLogoutCB', reason);
-  },
-};
+  handleInputChange = (event, key) => {
+    this.setState({ [key]: event.target.value });
+  };
 
-const App = () => {
-  const rumbleTalkRef = React.useRef({});
+  login = () => {
+    const { username, password } = this.state;
+    this.rumbleTalkRef.current.login({
+      hash,
+      username,
+      password,
+      callback: (res) => {
+        console.log('login callback', res);
+        this.setState({username: '', password: ''});
+      }
+    });
+  };
 
-  return (
-    <div>
-      <RumbleTalk
-        // floating
-        hash={hash}
-        width={700}
-        height={500}
-        counter='14:23'
-        rumbleTalkRef={rumbleTalkRef}
-      />
-      <button onClick={() => rumbleTalkRef.current.login(loginData)}>
-        Login
-      </button>
-      <button onClick={() => rumbleTalkRef.current.logout(logoutData)}>
-        Logout
-      </button>
-      <button onClick={() => rumbleTalkRef.current.logoutCB(logoutCBdata)}>
-        LogoutCB
-      </button>
-    </div>
-  );
-};
+  logout = () => {
+    this.rumbleTalkRef.current.logout({
+      hash,
+      username: this.state.username,
+    });
+  };
+
+  logoutCB = () => {
+    this.rumbleTalkRef.current.logoutCB({
+      hash,
+      username: this.state.username,
+      callback: (reason) => console.log('logout callback', reason),
+    });
+  };
+
+  render() {
+    const { username, password } = this.state;
+
+    return (
+      <div className='main'>
+        <RumbleTalk
+          floating
+          hash={hash}
+          width={700}
+          height={500}
+          counter='14:23'
+          ref={this.rumbleTalkRef}
+        />
+        <div className='form'>
+          <input
+            type='text'
+            placeholder='username'
+            value={username}
+            onChange={(e) => this.handleInputChange(e, 'username')}
+          />
+          <input
+            type='password'
+            placeholder='password'
+            value={password}
+            onChange={(e) => this.handleInputChange(e, 'password')}
+          />
+          <div className='buttons'>
+            <button onClick={this.login}>Login</button>
+            <button onClick={this.logout}>Logout</button>
+            <button onClick={this.logoutCB}>LogoutCB</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default App;
