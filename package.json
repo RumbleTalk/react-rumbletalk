@@ -1,7 +1,28 @@
 {
   "name": "react-rumbletalk",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
+  "main": "dist/RumbleTalk.js",
+  "module": "dist/RumbleTalk.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RumbleTalk/react-rumbletalk.git"
+  },
+  "keywords": [
+    "react",
+    "javascript",
+    "RumbleTalk"
+  ],
+  "author": "RumbleTalk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RumbleTalk/react-rumbletalk/issues"
+  },
+  "homepage": "https://github.com/RumbleTalk/react-rumbletalk#readme",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -16,7 +37,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish:npm": "rm -rf dist && mkdir dist && babel ./src/lib -d dist --copy-files"
   },
   "eslintConfig": {
     "extends": [
@@ -35,5 +57,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/preset-react": "^7.14.5"
   }
 }

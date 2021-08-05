@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+# react-rumbletalk
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A react library for Rumbletalk chat users
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Using npm:
 
-### `npm start`
+`npm i react-rumbletalk`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Setup
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Import** `RumbleTalk` to your application
 
-### `npm test`
+```javascript
+import RumbleTalk from 'react-rumbletalk';
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Component usage
 
-### `npm run build`
+Use this in any of your `js/jsx` or `ts/tsx` file where you would like to place the chat
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Basic use
+```javascript
+<RumbleTalk hash='chat-hash' width={700} height={500} />
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Floating
+```typescript
+<RumbleTalk floating hash='chat-hash' side='right' image='https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png' counter='14:23' />
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>hash</td>
+    <td>string</td>
+    <td></td>
+    <td>The hash string which defines the chat to be loaded</td>
+  </tr>
+  <tr>
+    <td>width</td>
+    <td>number</td>
+    <td><b>700</b></td>
+    <td>Size of the width of the chat in pixels</td>
+  </tr>
+  <tr>
+    <td>height</td>
+    <td>number</td>
+    <td><b>500</b></td>
+    <td>Size of the height of the chat in pixels</td>
+  </tr>
+  <tr>
+    <td>floating</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>Displays the chat in a floating manner or else it is fixed</td>
+  </tr>
+  <tr>
+    <td>side</td>
+    <td>string</td>
+    <td>right</td>
+    <td>If <i>floating</i> is <i>true</i>, sets which side of the window will the floating chat be displayed, can only be either 'left' or 'right'</td>
+  </tr>
+  <tr>
+    <td>image</td>
+    <td>string</td>
+    <td>
+      <a href="https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png" target="_blank">default image</a>
+    </td>
+    <td>If <i>floating</i> is <i>true</i>, sets the image used for the floating chat</td>
+  </tr>
+  <tr>
+    <td>counter</td>
+    <td>string</td>
+    <td>14:23</td>
+    <td>If <i>floating</i> is <i>true</i>, top:left coordinates of the counter/number of users in the chat</td>
+  </tr>
+</table>
 
-### `npm run eject`
+## Service usage
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+These are the available methods you can use in the chat by importing the `RumbleTalk` file
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> Note: To use this feature, you need to create a reference to the RumbleTalk component by using `this.ref = React.createRef()` for class component or `ref = React.useRef()` for functional component and add it to the component like this `ref={this.ref}` or `ref={ref}`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Methods
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### login(data)
 
-## Learn More
+```javascript
+this.ref.current.login({
+    hash: hash,
+    username: username,
+    password: password,
+    callback: (response) => {...}
+});
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Use to login to your chat
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### logout()
 
-### Code Splitting
+```javascript
+this.ref.current.logout({
+    hash: hash,
+    username: username,
+});
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Use to logout from your chat
 
-### Analyzing the Bundle Size
+#### logoutCB
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```typescript
+this.ref.current.logoutCB({
+    hash: hash,
+    username: username,
+    callback: (reason) => {...},
+});
+```
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Use to logout from your chat with callback
