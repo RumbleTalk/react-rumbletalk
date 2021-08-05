@@ -104,7 +104,7 @@ this.ref.current.login({
 
 Use to login to your chat
 
-#### logout()
+#### logout(data)
 
 ```javascript
 this.ref.current.logout({
@@ -115,7 +115,7 @@ this.ref.current.logout({
 
 Use to logout from your chat
 
-#### logoutCB
+#### logoutCB(data)
 
 ```typescript
 this.ref.current.logoutCB({
