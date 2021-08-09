@@ -117,7 +117,7 @@ Use to logout from your chat
 
 #### logoutCB(data)
 
-```typescript
+```javascript
 this.ref.current.logoutCB({
     hash: hash,
     username: username,
@@ -126,3 +126,14 @@ this.ref.current.logoutCB({
 ```
 
 Use to logout from your chat with callback
+
+#### logoutCB(data)
+
+```javascript
+this.ref.current.openPrivateChat({
+    hash: hash,
+    username: username,
+});
+```
+
+Use to open the private chat

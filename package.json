@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/RumbleTalk/react-rumbletalk/issues"
   },
-  "homepage": ".",
+  "homepage": "https://github.com/RumbleTalk/react-rumbletalk",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
