@@ -52,6 +52,13 @@ class App extends React.Component {
     });
   };
 
+  openPrivateChat = () => {
+    this.rumbleTalkRef.current.openPrivateChat({
+      hash,
+      username: this.state.username,
+    });
+  };
+
   render() {
     const { username, password } = this.state;
 
@@ -82,6 +89,7 @@ class App extends React.Component {
             <button onClick={this.login}>Login</button>
             <button onClick={this.logout}>Logout</button>
             <button onClick={this.logoutCB}>LogoutCB</button>
+            <button onClick={this.openPrivateChat}>Open Private Chat</button>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 {
   "name": "react-rumbletalk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "main": "dist/RumbleTalk.js",
   "module": "dist/RumbleTalk.js",
@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/RumbleTalk/react-rumbletalk/issues"
   },
-  "homepage": "https://github.com/RumbleTalk/react-rumbletalk#readme",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

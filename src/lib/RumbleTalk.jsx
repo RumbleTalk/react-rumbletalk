@@ -16,6 +16,7 @@ const postMessageEvents = {
   LOGIN_SUCCESS: 'pm.4',
   LOGIN_ALREADY_LOGGED_IN: 'pm.5',
   LOGOUT: 'pm.6',
+  OPEN_PRIVATE_CHAT: 'pm.7'
 };
 
 class RumbleTalk extends React.Component {
@@ -326,6 +327,23 @@ class RumbleTalk extends React.Component {
     );
   };
 
+  openPrivateChat = (data) => {
+    const message = {
+      type: postMessageEvents.OPEN_PRIVATE_CHAT,
+      hash: data.hash
+    };
+
+    if (data.userId) {
+      message.userId = data.userId;
+    }
+
+    if (data.username) {
+      message.username = data.username;
+    }
+
+    this.postMessage(message);
+  };
+
   postMessage = (data) => {
     try {
       const target =
@@ -346,7 +364,7 @@ class RumbleTalk extends React.Component {
   validatePassword = (password) => 0 < password.length && password.length < 51;
 
   validateUrl = (url) =>
-    /(https?:)?\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(
+    /(https?:)?\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/.test(
       url
     );
 
@@ -383,6 +401,7 @@ class RumbleTalk extends React.Component {
     ref.current.login = this.login;
     ref.current.logout = this.logout;
     ref.current.logoutCB = this.logoutCB;
+    ref.current.openPrivateChat = this.openPrivateChat;
     this.setState({ counters }, this.loadIframe);
   }
 
@@ -429,6 +448,7 @@ RumbleTalk.propTypes = {
       login: PropTypes.func,
       logout: PropTypes.func,
       logoutCB: PropTypes.func,
+      openPrivateChat: PropTypes.func,
     }),
   }),
 };
