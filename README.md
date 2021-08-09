@@ -127,7 +127,7 @@ this.ref.current.logoutCB({
 
 Use to logout from your chat with callback
 
-#### logoutCB(data)
+#### openPrivateChat(data)
 
 ```javascript
 this.ref.current.openPrivateChat({
