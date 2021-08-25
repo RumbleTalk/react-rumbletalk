@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import './RumbleTalk.css';
 import Iframe from './components/Iframe';
-import FloatingBubble from './components/FloatingChat';
+import FloatingChat from './components/FloatingChat';
 
 const protocol = 'https://';
-const baseWebUrl = 'https://www.rumbletalk.com';
+const baseWebUrl = 'https://rumbletalk.com';
 const serviceRelativeUrl = 'client/service.php?hash=';
 const postMessageEvents = {
   LOGOUT_CB: 'pm.1',
@@ -377,7 +377,7 @@ class RumbleTalk extends React.Component {
     /^https:\/\/.+\.rumbletalk\.(net|com)(:4433)?$/.test(origin);
 
   componentDidMount() {
-    const { floating, counter, ref } = this.props;
+    const { floating, counter } = this.props;
     const { counters } = this.state;
 
     if (floating && counter) {
@@ -398,10 +398,6 @@ class RumbleTalk extends React.Component {
     }
 
     this.addListeners();
-    ref.current.login = this.login;
-    ref.current.logout = this.logout;
-    ref.current.logoutCB = this.logoutCB;
-    ref.current.openPrivateChat = this.openPrivateChat;
     this.setState({ counters }, this.loadIframe);
   }
 
@@ -414,7 +410,7 @@ class RumbleTalk extends React.Component {
     }
 
     return floating ? (
-      <FloatingBubble
+      <FloatingChat
         {...this.props}
         {...this.state}
         ref={this.iframeRef}
@@ -443,14 +439,6 @@ RumbleTalk.propTypes = {
   side: PropTypes.oneOf(['left', 'right']),
   image: PropTypes.string,
   counter: PropTypes.string,
-  ref: PropTypes.shape({
-    current: PropTypes.shape({
-      login: PropTypes.func,
-      logout: PropTypes.func,
-      logoutCB: PropTypes.func,
-      openPrivateChat: PropTypes.func,
-    }),
-  }),
 };
 
 RumbleTalk.defaultProps = {
@@ -459,7 +447,6 @@ RumbleTalk.defaultProps = {
   floating: false,
   side: 'right',
   image: 'https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png',
-  ref: { current: {} },
 };
 
 export default RumbleTalk;
