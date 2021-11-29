@@ -1,6 +1,6 @@
 {
   "name": "react-rumbletalk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": false,
   "main": "dist/RumbleTalk.js",
   "module": "dist/RumbleTalk.js",
