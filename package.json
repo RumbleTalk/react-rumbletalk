@@ -1,6 +1,6 @@
 {
   "name": "react-rumbletalk",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": false,
   "main": "dist/RumbleTalk.js",
   "module": "dist/RumbleTalk.js",
@@ -15,7 +15,14 @@
   "keywords": [
     "react",
     "javascript",
-    "RumbleTalk"
+    "typescript",
+    "rumbletalk",
+    "chatroom",
+    "group chat",
+    "chat room",
+    "groupchat",
+    "chat service",
+    "chat"
   ],
   "author": "RumbleTalk",
   "license": "ISC",
