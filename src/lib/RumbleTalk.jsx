@@ -57,11 +57,9 @@ class RumbleTalk extends React.Component {
     const res = await axios.get(`${baseWebUrl}/${serviceRelativeUrl}${hash}`);
     this.server = res.data.address;
 
-    if (!this.mobile) {
-      this.setState({
-        src: `https://${this.server}/${hash}/#${window.location.href}`,
-      });
-    }
+    this.setState({
+      src: `https://${this.server}/${hash}/#${window.location.href}`,
+    });
   };
 
   /**
