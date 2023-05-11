@@ -1,8 +1,11 @@
 # react-rumbletalk
 
-A React library for Rumbletalk group chats. Your platform for creating engaging messaging chat rooms for online events, web-site, platforms ,or apps.
+A React library for Rumbletalk group chats. 
+Your platform for creating engaging messaging chat rooms for online events, web-site, platforms ,or apps.
 
 ![RumbleTalk Chat](https://d1pfint8izqszg.cloudfront.net/web7/images/q&a_fold.png)
+
+![Rumbletalk cchat polls](https://d1pfint8izqszg.cloudfront.net/new/images/home8/03-01-lp-results.png)
 
 ## Features
 
