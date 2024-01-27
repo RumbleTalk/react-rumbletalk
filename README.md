@@ -1,11 +1,11 @@
 # react-rumbletalk
 
-A React library for Rumbletalk group chats. 
-Your platform for creating engaging messaging chat rooms for online events, web-site, platforms ,or apps.
+A React library for RumbleTalk group chats. Your platform for creating engaging messaging chat rooms for online events,
+web-site, platforms ,or apps.
 
 ![RumbleTalk Chat](https://d1pfint8izqszg.cloudfront.net/web7/images/q&a_fold.png)
 
-![Rumbletalk cchat polls](https://d1pfint8izqszg.cloudfront.net/new/images/home8/03-01-lp-results.png)
+![RumbleTalk Chat Polls](https://d1pfint8izqszg.cloudfront.net/new/images/home8/03-01-lp-results.png)
 
 ## Features
 
@@ -16,7 +16,7 @@ Your platform for creating engaging messaging chat rooms for online events, web-
 - Video and audio calls
 - Approve message mode (Q&A)
 - Backend agnostic
-- voice and audio messages 
+- voice and audio messages
 - Images, videos, files & emojis
 - Private messages
 - Text formatting - bold, italic, strikethrough, underline
@@ -30,13 +30,15 @@ Your platform for creating engaging messaging chat rooms for online events, web-
 
 Using npm:
 
-`npm i react-rumbletalk`
+```shell
+npm i react-rumbletalk
+```
 
 ## Setup
 
 **Import** `RumbleTalk` to your application
 
-```javascript
+```typescript
 import RumbleTalk from 'react-rumbletalk';
 ```
 
@@ -45,13 +47,20 @@ import RumbleTalk from 'react-rumbletalk';
 Use this in any of your `js/jsx` or `ts/tsx` file where you would like to place the chat
 
 ### Basic use
-```javascript
-<RumbleTalk hash='chat-hash' width={700} height={500} />
+
+```html
+<RumbleTalk hash="chat-hash"
+            width={700}
+            height={500}/>
 ```
 
 ### Floating
-```typescript
-<RumbleTalk floating hash='chat-hash' side='right' image='https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png' counter='14:23' />
+
+```html
+<RumbleTalk floating hash="chat-hash"
+            side="right"
+            image="https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png"
+            counter="14:23"/>
 ```
 
 <table>
@@ -111,7 +120,12 @@ Use this in any of your `js/jsx` or `ts/tsx` file where you would like to place 
 
 These are the available methods you can use in the chat by importing the `RumbleTalk` file
 
-> Note: To use this feature, you need to create a reference to the RumbleTalk component by using `this.ref = React.createRef()` for class component or `ref = React.useRef()` for functional component and add it to the component like this `ref={this.ref}` or `ref={ref}`
+> Note: To use this feature, you need to create a reference to the RumbleTalk component by using
+> `this.ref = React.createRef()`
+> for class component or
+> `ref = React.useRef()`
+> for functional component and add it to the component like this
+> `ref={this.ref}` or `ref={ref}`
 
 ### Methods
 
@@ -122,22 +136,24 @@ this.ref.current.login({
     hash: hash,
     username: username,
     password: password,
-    callback: (response) => {...}
+    callback: (response) => {
+        ...
+    }
 });
 ```
 
-Use to login to your chat
+Used to log in to your chat
 
 #### logout(data)
 
 ```javascript
 this.ref.current.logout({
     hash: hash,
-    username: username,
+    username: username
 });
 ```
 
-Use to logout from your chat
+Used to log out from your chat
 
 #### logoutCB(data)
 
@@ -145,19 +161,21 @@ Use to logout from your chat
 this.ref.current.logoutCB({
     hash: hash,
     username: username,
-    callback: (reason) => {...},
+    callback: (reason) => {
+        ...
+    }
 });
 ```
 
-Use to logout from your chat with callback
+Used to log out from your chat with callback
 
 #### openPrivateChat(data)
 
 ```javascript
 this.ref.current.openPrivateChat({
     hash: hash,
-    username: username,
+    username: username
 });
 ```
 
-Use to open the private chat
+Used to open the private chat
