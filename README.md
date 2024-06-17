@@ -1,7 +1,7 @@
 # react-rumbletalk
 
 A React library for RumbleTalk group chats. Your platform for creating engaging messaging chat rooms for online events,
-web-site, platforms ,or apps.
+web-site, platforms, and more.
 
 ![RumbleTalk Chat](https://d1pfint8izqszg.cloudfront.net/web7/images/q&a_fold.png)
 
@@ -12,18 +12,17 @@ web-site, platforms ,or apps.
 - React compatibility
 - CSS Customization
 - Polls
-- create multiple rooms
-- Video and audio calls
+- Create multiple rooms
+- Video calls
 - Approve message mode (Q&A)
 - Backend agnostic
-- voice and audio messages
-- Images, videos, files & emojis
-- Private messages
-- Text formatting - bold, italic, strikethrough, underline
-- Online / Offline users status
-- Flexible options and slots
+- Voice and audio messages
+- Embed images, videos and files
+- Private messaging
+- Text formatting - bold, italic, strikethrough, underline, and code
+- Online / offline user status
 - Different themes
-- Floating or embed chat
+- Embed directly into your website
 - Mute all
 
 ## Installation
@@ -57,7 +56,8 @@ Use this in any of your `js/jsx` or `ts/tsx` file where you would like to place 
 ### Floating
 
 ```html
-<RumbleTalk floating hash="chat-hash"
+<RumbleTalk floating
+            hash="chat-hash"
             side="right"
             image="https://d1pfint8izqszg.cloudfront.net/images/toolbar/toolbar.png"
             counter="14:23"/>
@@ -141,8 +141,7 @@ this.ref.current.login({
     }
 });
 ```
-
-Used to log in to your chat
+Used to log into your chat
 
 #### logout(data)
 
@@ -152,7 +151,6 @@ this.ref.current.logout({
     username: username
 });
 ```
-
 Used to log out from your chat
 
 #### logoutCB(data)
@@ -166,8 +164,7 @@ this.ref.current.logoutCB({
     }
 });
 ```
-
-Used to log out from your chat with callback
+Used to execute a callback functino when the user logs out of the room
 
 #### openPrivateChat(data)
 
@@ -178,4 +175,4 @@ this.ref.current.openPrivateChat({
 });
 ```
 
-Used to open the private chat
+Used to open a private chat with a specific user
