@@ -131,13 +131,13 @@ These are the available methods you can use in the chat by importing the `Rumble
 
 #### login(data)
 
-```javascript
+```typescript
 this.ref.current.login({
     hash: hash,
     username: username,
     password: password,
     callback: (response) => {
-        ...
+        // ...
     }
 });
 ```
@@ -145,7 +145,7 @@ Used to log into your chat
 
 #### logout(data)
 
-```javascript
+```typescript
 this.ref.current.logout({
     hash: hash,
     username: username
@@ -155,12 +155,12 @@ Used to log out from your chat
 
 #### logoutCB(data)
 
-```javascript
+```typescript
 this.ref.current.logoutCB({
     hash: hash,
     username: username,
     callback: (reason) => {
-        ...
+        // ...
     }
 });
 ```
@@ -168,7 +168,7 @@ Used to execute a callback functino when the user logs out of the room
 
 #### openPrivateChat(data)
 
-```javascript
+```typescript
 this.ref.current.openPrivateChat({
     hash: hash,
     username: username
