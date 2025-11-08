@@ -45,8 +45,8 @@
     "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish:npm": "rm -rf dist && mkdir dist && NODE_ENV=production babel ./src/lib -d dist --copy-files",
-    "publish:npm-windows": "rm -rf dist && mkdir dist && SET NODE_ENV=production && babel ./src/lib -d dist --copy-files"
+    "build:npm": "rm -rf dist && mkdir dist && NODE_ENV=production babel ./src/lib -d dist --copy-files",
+    "build:npm-windows": "rm -rf dist && mkdir dist && SET NODE_ENV=production && babel ./src/lib -d dist --copy-files"
   },
   "eslintConfig": {
     "extends": [
